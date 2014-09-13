@@ -28,6 +28,17 @@
 		var tile_layer = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png';
 		var attr = 'GeoIQ layer';
 
+		$('#osmButton').click(function(){
+			tile_layer = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+			attr = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+		});
+
+		$('#acetateButton').click(function(){
+			tile_layer = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png';
+			attr = 'GeoIQ layer';
+		});
+
+
 		//use jQuery to load script after HTML
 		$(document).ready(function(){
 			
@@ -35,8 +46,6 @@
 			var map,
 				cities,
 				tiles;
-
-			console.log('globals set');
 
 			//new Leaflet map centering on Burien, WA
 			map = L.map('map', {
@@ -90,31 +99,21 @@
 			}
 
 			var popup = L.popup();
+			// var marker = L.marker();
 
 			function onMapClick(e) {
 			    popup
 			        .setLatLng(e.latlng)
 			        .setContent("You clicked the map at " + e.latlng.toString())
 			        .openOn(map);
+
+			    var marker = L.marker().setLatLng(e.latlng).addTo(map);
 			}
 
 			map.on('click', onMapClick);
 
-
 		});
 
-
-
-
-		// $('#osmButton').click(function(){
-		// 	tile_layer = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
-		// 	attr = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
-		// });
-
-		// $('#acetateButton').click(function(){
-		// 	tile_layer = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png';
-		// 	attr = 'GeoIQ layer';
-		// });
 
 	</script>
 
@@ -131,8 +130,8 @@
 	<h2>Different Tile Services</h2>
 	</p>
 	<div>
-		<button id="osmButton">Open Street Map</button>
-		<button id="acetateButton">Acetate</button>
+<!-- 		<button id="osmButton">Open Street Map</button>
+		<button id="acetateButton">Acetate</button> -->
 	<div>
 
 </body>
