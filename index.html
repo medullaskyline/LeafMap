@@ -64,9 +64,9 @@
 
 			//new Leaflet map centering on Burien, WA
 			map = L.map('map', {
-				center: [47.4683, -122.3456],
+				center: [38, -90],
 				zoom: 4,
-				minZoom: 5
+				minZoom: 4
 			});
 
 			//new Leaflet tileLayer for background slippy tiles
@@ -101,7 +101,19 @@
 								fillColor: '#f00',
 								color: '#f00'
 							})
-						}
+						},
+
+						// pointToLayer: function(feature, latlng){
+							
+						// 	//new Leaflet circleMarker layer for each marker
+						// 	return L.circleMarker(latlng, {
+								
+						// 		//calculate each radius separately using an attribute
+						// 		radius: calcDiffRadius(feature.properties.yr2005, feature.properties.yr2011),
+						// 		fillColor: 'blue',
+						// 		color: 'blue'
+						// 	})
+						// }
 					}).addTo(map); //<-add the geoJson layer to the map
 				})
 
@@ -112,6 +124,15 @@
 				var radius = Math.sqrt(area/Math.PI)*2;
 				return radius;
 			}
+
+			function calcDiffRadius(yr1, yr2){
+				var scaleFactor = 10;
+				var area1 = yr1 *scaleFactor;
+				var area2 = yr2 *scaleFactor;
+				var area = Math.abs(area1 - area2);
+				var radius = Math.sqrt(area/Math.PI)*2;
+				return radius;
+			} // end document.ready
 
 			var popup = L.popup();
 
@@ -145,8 +166,15 @@
 	<h2>Different Tile Services</h2>
 	</p>
 	<div>
-<!-- 		<button id="osmButton">Open Street Map</button>
-		<button id="acetateButton">Acetate</button> -->
+		<button id="osmButton">Open Street Map</button>
+		<button id="acetateButton">Acetate</button>
+	<div>
+	<p>
+	<h2>Population Views</h2>
+	</p>
+	<div>
+		<button id="absButton" style="color: #f00">Population 2011</button>
+		<button id="growthButton" style="color: blue">Growth 2005-2011</button>
 	<div>
 
 </body>
