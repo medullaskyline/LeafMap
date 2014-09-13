@@ -24,6 +24,21 @@
 
 	<!-- main script -->
 	<script>
+
+		var LeafIcon = L.Icon.extend({
+		    options: {
+		        shadowUrl: 'assets/leaf-shadow.png',
+		        iconSize:     [38, 95],
+		        shadowSize:   [50, 64],
+		        iconAnchor:   [22, 94],
+		        shadowAnchor: [4, 62],
+		        popupAnchor:  [-3, -76]
+		    }
+		});
+
+		var greenIcon = new LeafIcon({iconUrl: 'assets/leaf-green.png'}),
+		    redIcon = new LeafIcon({iconUrl: 'assets/leaf-red.png'}),
+		    orangeIcon = new LeafIcon({iconUrl: 'assets/leaf-orange.png'});
 		
 		var tile_layer = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png';
 		var attr = 'GeoIQ layer';
@@ -99,7 +114,6 @@
 			}
 
 			var popup = L.popup();
-			// var marker = L.marker();
 
 			function onMapClick(e) {
 			    popup
@@ -107,7 +121,8 @@
 			        .setContent("You clicked the map at " + e.latlng.toString())
 			        .openOn(map);
 
-			    var marker = L.marker().setLatLng(e.latlng).addTo(map);
+			    // var marker = L.marker().setLatLng(e.latlng).addTo(map);
+			    L.marker(e.latlng, {icon: greenIcon}).addTo(map); //.bindPopup("I am a green leaf.");
 			}
 
 			map.on('click', onMapClick);
