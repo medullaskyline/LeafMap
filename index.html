@@ -53,6 +53,66 @@
 			attr = 'GeoIQ layer';
 		});
 
+		$('#growthButton').click(function(){
+			//use jQuery to load the data
+			$.getJSON("data/cityData.json")
+				.done(function(data){
+
+					//new Leaflet geoJson layer creates point features out of data objects
+					L.geoJson(data, {
+						
+						//attach a popup with the feature name to each point feature
+						onEachFeature: function(feature, layer){
+							layer.bindPopup(feature.properties.name)
+						},
+						
+						//change default png markers to dynamic circle markers
+						pointToLayer: function(feature, latlng){
+							
+							//new Leaflet circleMarker layer for each marker
+							return L.circleMarker(latlng, {
+								
+								//calculate each radius separately using an attribute
+								radius: calcDiffRadius(feature.properties.yr2005, feature.properties.yr2011),
+								fillColor: 'blue',
+								color: 'blue'
+							})
+						}
+					}).addTo(map); //<-add the geoJson layer to the map
+				})
+		});
+
+		$('#absButton').click(function(){
+			//use jQuery to load the data
+			$.getJSON("data/cityData.json")
+				.done(function(data){
+
+					//new Leaflet geoJson layer creates point features out of data objects
+					L.geoJson(data, {
+						
+						//attach a popup with the feature name to each point feature
+						onEachFeature: function(feature, layer){
+							layer.bindPopup(feature.properties.name)
+						},
+						
+						//change default png markers to dynamic circle markers
+						pointToLayer: function(feature, latlng){
+							
+							//new Leaflet circleMarker layer for each marker
+							return L.circleMarker(latlng, {
+								
+								//calculate each radius separately using an attribute
+								radius: calcPropRadius(feature.properties.yr2005),
+								fillColor: '#f00',
+								color: '#f00'
+							})
+						},
+
+					}).addTo(map); //<-add the geoJson layer to the map
+				})
+
+		});
+
 
 		//use jQuery to load script after HTML
 		$(document).ready(function(){
@@ -103,17 +163,6 @@
 							})
 						},
 
-						// pointToLayer: function(feature, latlng){
-							
-						// 	//new Leaflet circleMarker layer for each marker
-						// 	return L.circleMarker(latlng, {
-								
-						// 		//calculate each radius separately using an attribute
-						// 		radius: calcDiffRadius(feature.properties.yr2005, feature.properties.yr2011),
-						// 		fillColor: 'blue',
-						// 		color: 'blue'
-						// 	})
-						// }
 					}).addTo(map); //<-add the geoJson layer to the map
 				})
 
@@ -132,7 +181,7 @@
 				var area = Math.abs(area1 - area2);
 				var radius = Math.sqrt(area/Math.PI)*2;
 				return radius;
-			} // end document.ready
+			} 
 
 			var popup = L.popup();
 
@@ -148,7 +197,7 @@
 
 			map.on('click', onMapClick);
 
-		});
+		}); // end document.ready
 
 
 	</script>
