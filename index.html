@@ -88,17 +88,33 @@
 				var radius = Math.sqrt(area/Math.PI)*2;
 				return radius;
 			}
+
+			var popup = L.popup();
+
+			function onMapClick(e) {
+			    popup
+			        .setLatLng(e.latlng)
+			        .setContent("You clicked the map at " + e.latlng.toString())
+			        .openOn(map);
+			}
+
+			map.on('click', onMapClick);
+
+
 		});
 
-		$('#osmButton').click(function(){
-			tile_layer = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
-			attr = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
-		});
 
-		$('#acetateButton').click(function(){
-			tile_layer = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png';
-			attr = 'GeoIQ layer';
-		});
+
+
+		// $('#osmButton').click(function(){
+		// 	tile_layer = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+		// 	attr = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+		// });
+
+		// $('#acetateButton').click(function(){
+		// 	tile_layer = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png';
+		// 	attr = 'GeoIQ layer';
+		// });
 
 	</script>
 
