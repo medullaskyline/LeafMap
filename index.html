@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>PCD Roxx!</title>
+	<title>Leaflet Map</title>
 
 	<meta name="viewport" content="width=device-width">
 
 	<!-- links to Leaflet stylesheets -->
+	<link rel="stylesheet" href="css/leaf_map.css">
+
 	<link rel="stylesheet" href="css/leaflet.css">
 	<!--[if IE]>
 		<link rel="stylesheet" href="css/leaflet.ie.css">
@@ -16,28 +18,6 @@
 
 <body>
 
-	<!-- styles for html elements -->
-	<style>
-		body {
-			font-family: sans-serif;
-		}
-		#wrapper {
-			width: 960px;
-			margin: 15px;
-		}
-		#map {
-			width: 100%;
-			height: 450px;
-			margin: 15px;
-		}
-	</style>
-
-	<!-- html elements to hold page content, map -->
-	<div id="wrapper">
-		<h1>Proportional Symbol Map for PCD</h1>
-		<div id="map"></div>
-	</div>
-
 	<!-- script links to jQuery and Leaflet -->
 	<script src="js/jquery.js"></script>
 	<script src="js/leaflet.js"></script>
@@ -45,6 +25,9 @@
 	<!-- main script -->
 	<script>
 		
+		var tile_layer = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png';
+		var attr = 'GeoIQ layer';
+
 		//use jQuery to load script after HTML
 		$(document).ready(function(){
 			
@@ -53,18 +36,23 @@
 				cities,
 				tiles;
 
-			//new Leaflet map
+			console.log('globals set');
+
+			//new Leaflet map centering on Burien, WA
 			map = L.map('map', {
-				center: [38, -96],
+				center: [47.4683, -122.3456],
 				zoom: 4,
-				minZoom: 4
+				minZoom: 5
 			});
 
 			//new Leaflet tileLayer for background slippy tiles
-			tiles = L.tileLayer('http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png',
+			tiles = L.tileLayer(tile_layer,
 				{
-					attribution: 'GeoIQ layer'
+					attribution: attr
 				}).addTo(map); //<-don't forget this bit if you want to see the tiles!
+
+			
+
 
 			//use jQuery to load the data
 			$.getJSON("data/cityData.json")
@@ -102,7 +90,34 @@
 			}
 		});
 
+		$('#osmButton').click(function(){
+			tile_layer = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+			attr = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+		});
+
+		$('#acetateButton').click(function(){
+			tile_layer = 'http://{s}.acetate.geoiq.com/tiles/acetate/{z}/{x}/{y}.png';
+			attr = 'GeoIQ layer';
+		});
+
 	</script>
+
+
+
+
+
+	<!-- html elements to hold page content, map -->
+	<div id="wrapper">
+		<h1>A Map Made With Leaflet.js</h1>
+		<div id="map"></div>
+	</div>
+	<p>
+	<h2>Different Tile Services</h2>
+	</p>
+	<div>
+		<button id="osmButton">Open Street Map</button>
+		<button id="acetateButton">Acetate</button>
+	<div>
 
 </body>
 </html>

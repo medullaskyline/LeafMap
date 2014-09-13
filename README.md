@@ -1,6 +1,5 @@
-pcdRoxx
-=======
+Trying out leaflet.js
 
-###Files for talk: Zero to Web Map in 1200 Seconds Flat
+To load the json data, open a simple web server
 
-This branch contains all of the bare-bones files and a graphical tutorial for setting up a proportional symbol web map using Leaflet and jQuery. Have fun!
+> python -m SimpleHttpServer
